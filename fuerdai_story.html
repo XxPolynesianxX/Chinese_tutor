@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>富二代的故事 - Chinese Reading Story</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .main-content {
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+        }
+
+        .story-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .toggle-btn {
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            background: white;
+            color: #3498db;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .toggle-btn.active {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .story-content {
+            font-size: 1.3em;
+            line-height: 2;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+            min-height: 400px;
+        }
+
+        .chinese-text {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+        }
+
+        .pinyin-text {
+            font-style: italic;
+            color: #e74c3c;
+        }
+
+        .english-text {
+            color: #27ae60;
+        }
+
+        .paragraph {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .paragraph:hover {
+            background: rgba(52, 152, 219, 0.05);
+            transform: translateX(5px);
+        }
+
+        .character-info {
+            background: #e8f6ff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .character-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+
+        .vocabulary-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff5f5;
+            border-radius: 15px;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .vocab-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 15px;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .vocab-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #fadbd8;
+            transition: all 0.3s ease;
+        }
+
+        .vocab-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
+        }
+
+        .vocab-chinese {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .vocab-pinyin {
+            color: #e74c3c;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        .vocab-english {
+            color: #27ae60;
+            font-size: 0.9em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                padding: 10px 0;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-link {
+                font-size: 1em;
+                padding: 8px 15px;
+            }
+            
+            .main-content {
+                margin-top: 80px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+            
+            .story-content {
+                font-size: 1.1em;
+            }
+            
+            .controls {
+                gap: 10px;
+            }
+            
+            .toggle-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navigation">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">HSK 3 基础</a>
+                <a href="hsk3_master.html" class="nav-link">HSK 3 Master</a>
+                <a href="advanced.html" class="nav-link">HSK 4-5 高级</a>
+                <a href="emoji_game.html" class="nav-link">Emoji Game</a>
+                <a href="fuerdai_story.html" class="nav-link active">富二代故事</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="story-container">
+            <div class="header">
+                <h1 class="title">富二代的故事</h1>
+                <p class="subtitle">A Story About the Rich Second Generation</p>
+            </div>
+
+            <div class="controls">
+                <button class="toggle-btn active" id="chineseBtn" onclick="showLanguage('chinese')">中文</button>
+                <button class="toggle-btn" id="pinyinBtn" onclick="showLanguage('pinyin')">Pinyin</button>
+                <button class="toggle-btn" id="englishBtn" onclick="showLanguage('english')">English</button>
+            </div>
+
+            <div class="character-info">
+                <div class="character-title">主要人物 Main Characters:</div>
+                <div id="characters">
+                    <div class="chinese-version">
+                        <strong>王小华</strong> - 一个富二代，父亲是大公司的老板<br>
+                        <strong>李美丽</strong> - 王小华的女朋友，普通家庭出身<br>
+                        <strong>张明</strong> - 王小华的好朋友，也是富二代
+                    </div>
+                    <div class="pinyin-version hidden">
+                        <strong>Wáng Xiǎohuá</strong> - yīgè fù'èrdài, fùqin shì dà gōngsī de lǎobǎn<br>
+                        <strong>Lǐ Měilì</strong> - Wáng Xiǎohuá de nǚpéngyou, pǔtōng jiātíng chūshēn<br>
+                        <strong>Zhāng Míng</strong> - Wáng Xiǎohuá de hǎo péngyou, yě shì fù'èrdài
+                    </div>
+                    <div class="english-version hidden">
+                        <strong>Wang Xiaohua</strong> - A rich second generation, his father is the boss of a big company<br>
+                        <strong>Li Meili</strong> - Wang Xiaohua's girlfriend, from an ordinary family<br>
+                        <strong>Zhang Ming</strong> - Wang Xiaohua's good friend, also a rich second generation
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-content" id="storyContent">
+                <div class="chinese-version">
+                    <div class="paragraph">王小华是一个富二代。他的父亲王先生是一家大公司的老板，家里很有钱。小华从小就住在大房子里，穿名牌衣服，开豪华汽车。</div>
+                    
+                    <div class="paragraph">虽然小华很富有，但是他是一个好人。他不像其他富二代那样骄傲，而是很谦虚和友善。他在大学里学习很努力，希望将来能够帮助父亲管理公司。</div>
+                    
+                    <div class="paragraph">小华有一个女朋友叫李美丽。美丽来自普通家庭，父母都是普通工人。虽然她的家庭不富裕，但是小华很爱她，因为她善良、聪明，而且很独立。</div>
+                    
+                    <div class="paragraph">有一天，小华和他的朋友张明一起去购物中心。张明也是富二代，但是他很骄傲，总是看不起穷人。张明对小华说："你为什么要和那个穷女孩交往？你应该找一个富有的女孩。"</div>
+                    
+                    <div class="paragraph">小华生气地说："钱不是最重要的东西。美丽是一个好女孩，我爱的是她的人，不是她的钱。真正的爱情不看金钱，只看心灵。"</div>
+                    
+                    <div class="paragraph">张明不理解小华的想法。他认为富人就应该和富人在一起。但是小华坚持自己的选择。他决定要更加努力地工作，证明爱情比金钱更重要。</div>
+                    
+                    <div class="paragraph">后来，小华和美丽结婚了。他们过着幸福的生活。小华学会了金钱的真正价值不是用来炫耀，而是用来帮助别人。他和美丽一起做慈善工作，帮助需要帮助的人。</div>
+                </div>
+
+                <div class="pinyin-version hidden">
+                    <div class="paragraph">Wáng Xiǎohuá shì yīgè fù'èrdài. Tā de fùqin Wáng xiānsheng shì yī jiā dà gōngsī de lǎobǎn, jiālǐ hěn yǒuqián. Xiǎohuá cóngxiǎo jiù zhù zài dà fángzi lǐ, chuān míngpái yīfu, kāi háohuá qìchē.</div>
+                    
+                    <div class="paragraph">Suīrán Xiǎohuá hěn fùyǒu, dànshì tā shì yīgè hǎorén. Tā bù xiàng qítā fù'èrdài nàyàng jiāo'ào, ér shì hěn qiānxū hé yǒushàn. Tā zài dàxué lǐ xuéxí hěn nǔlì, xīwàng jiānglái nénggòu bāngzhù fùqin guǎnlǐ gōngsī.</div>
+                    
+                    <div class="paragraph">Xiǎohuá yǒu yīgè nǚpéngyou jiào Lǐ Měilì. Měilì láizì pǔtōng jiātíng, fùmǔ dōu shì pǔtōng gōngrén. Suīrán tā de jiātíng bù fùyù, dànshì Xiǎohuá hěn ài tā, yīnwèi tā shànliáng, cōngming, érqiě hěn dúlì.</div>
+                    
+                    <div class="paragraph">Yǒu yī tiān, Xiǎohuá hé tā de péngyou Zhāng Míng yīqǐ qù gòuwù zhōngxīn. Zhāng Míng yě shì fù'èrdài, dànshì tā hěn jiāo'ào, zǒng shì kànbuqǐ qióngrén. Zhāng Míng duì Xiǎohuá shuō: "Nǐ wèishéme yào hé nàgè qióng nǚhái jiāowǎng? Nǐ yīnggāi zhǎo yīgè fùyǒu de nǚhái."</div>
+                    
+                    <div class="paragraph">Xiǎohuá shēngqì de shuō: "Qián bùshì zuì zhòngyào de dōngxi. Měilì shì yīgè hǎo nǚhái, wǒ ài de shì tā de rén, bùshì tā de qián. Zhēnzhèng de àiqíng bù kàn jīnqián, zhǐ kàn xīnlíng."</div>
+                    
+                    <div class="paragraph">Zhāng Míng bù lǐjiě Xiǎohuá de xiǎngfǎ. Tā rènwéi fùrén jiù yīnggāi hé fùrén zài yīqǐ. Dànshì Xiǎohuá jiānchí zìjǐ de xuǎnzé. Tā juédìng yào gèngjiā nǔlì de gōngzuò, zhèngmíng àiqíng bǐ jīnqián gèng zhòngyào.</div>
+                    
+                    <div class="paragraph">Hòulái, Xiǎohuá hé Měilì jiéhūn le. Tāmen guòzhe xìngfú de shēnghuó. Xiǎohuá xuéhuì le jīnqián de zhēnzhèng jiàzhí bùshì yònglái xuànyào, ér shì yònglái bāngzhù biérén. Tā hé Měilì yīqǐ zuò císhàn gōngzuò, bāngzhù xūyào bāngzhù de rén.</div>
+                </div>
+
+                <div class="english-version hidden">
+                    <div class="paragraph">Wang Xiaohua is a rich second generation. His father Mr. Wang is the boss of a big company, and the family is very wealthy. Xiaohua has lived in a big house since childhood, wearing designer clothes and driving luxury cars.</div>
+                    
+                    <div class="paragraph">Although Xiaohua is very wealthy, he is a good person. He is not arrogant like other rich second generation kids, but rather humble and friendly. He studies hard at university, hoping to help his father manage the company in the future.</div>
+                    
+                    <div class="paragraph">Xiaohua has a girlfriend named Li Meili. Meili comes from an ordinary family, and both her parents are ordinary workers. Although her family is not wealthy, Xiaohua loves her very much because she is kind, smart, and very independent.</div>
+                    
+                    <div class="paragraph">One day, Xiaohua and his friend Zhang Ming went to the shopping center together. Zhang Ming is also a rich second generation, but he is very arrogant and always looks down on poor people. Zhang Ming said to Xiaohua: "Why do you date that poor girl? You should find a wealthy girl."</div>
+                    
+                    <div class="paragraph">Xiaohua angrily said: "Money is not the most important thing. Meili is a good girl. I love her as a person, not her money. True love doesn't look at money, only at the heart."</div>
+                    
+                    <div class="paragraph">Zhang Ming didn't understand Xiaohua's thinking. He believed that rich people should be with rich people. But Xiaohua insisted on his choice. He decided to work even harder to prove that love is more important than money.</div>
+                    
+                    <div class="paragraph">Later, Xiaohua and Meili got married. They lived a happy life. Xiaohua learned that the true value of money is not for showing off, but for helping others. He and Meili did charity work together, helping people who needed help.</div>
+                </div>
+            </div>
+
+            <div class="vocabulary-section">
+                <div class="vocab-title">重要词汇 Key Vocabulary</div>
+                <div class="vocab-grid">
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">富二代</div>
+                        <div class="vocab-pinyin">fù'èrdài</div>
+                        <div class="vocab-english">rich second generation</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">老板</div>
+                        <div class="vocab-pinyin">lǎobǎn</div>
+                        <div class="vocab-english">boss</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">豪华</div>
+                        <div class="vocab-pinyin">háohuá</div>
+                        <div class="vocab-english">luxury</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">骄傲</div>
+                        <div class="vocab-pinyin">jiāo'ào</div>
+                        <div class="vocab-english">arrogant/proud</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">谦虚</div>
+                        <div class="vocab-pinyin">qiānxū</div>
+                        <div class="vocab-english">humble/modest</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">普通</div>
+                        <div class="vocab-pinyin">pǔtōng</div>
+                        <div class="vocab-english">ordinary/common</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">独立</div>
+                        <div class="vocab-pinyin">dúlì</div>
+                        <div class="vocab-english">independent</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">看不起</div>
+                        <div class="vocab-pinyin">kànbuqǐ</div>
+                        <div class="vocab-english">look down on</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">交往</div>
+                        <div class="vocab-pinyin">jiāowǎng</div>
+                        <div class="vocab-english">to date/interact</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">心灵</div>
+                        <div class="vocab-pinyin">xīnlíng</div>
+                        <div class="vocab-english">heart/soul</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">坚持</div>
+                        <div class="vocab-pinyin">jiānchí</div>
+                        <div class="vocab-english">to persist/insist</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">炫耀</div>
+                        <div class="vocab-pinyin">xuànyào</div>
+                        <div class="vocab-english">to show off</div>
+                    </div>
+                    <div class="vocab-item">
+                        <div class="vocab-chinese">慈善</div>
+                        <div class="vocab-pinyin">císhàn</div>
+                        <div class="vocab-english">charity</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLanguage = 'chinese';
+
+        function showLanguage(language) {
+            // Hide all versions
+            const chineseElements = document.querySelectorAll('.chinese-version');
+            const pinyinElements = document.querySelectorAll('.pinyin-version');
+            const englishElements = document.querySelectorAll('.english-version');
+            
+            chineseElements.forEach(el => el.classList.add('hidden'));
+            pinyinElements.forEach(el => el.classList.add('hidden'));
+            englishElements.forEach(el => el.classList.add('hidden'));
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected version and activate button
+            if (language === 'chinese') {
+                chineseElements.forEach(el => el.classList.remove('hidden'));
+                document.getElementById('chineseBtn').classList.add('active');
+                document.getElementById('storyContent').className = 'story-content chinese-text';
+            } else if (language === 'pinyin') {
+                pinyinElements.forEach(el => el.classList.remove('hidden'));
+                document.getElementById('pinyinBtn').classList.add('active');
+                document.getElementById('storyContent').className = 'story-content pinyin-text';
+            } else if (language === 'english') {
+                englishElements.forEach(el => el.classList.remove('hidden'));
+                document.getElementById('englishBtn').classList.add('active');
+                document.getElementById('storyContent').className = 'story-content english-text';
+            }
+            
+            currentLanguage = language;
+        }
+
+        // Initialize with Chinese
+        window.onload = function() {
+            showLanguage('chinese');
+        };
+    </script>
+</body>
+</html>
