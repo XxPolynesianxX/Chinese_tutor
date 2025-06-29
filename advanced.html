@@ -144,7 +144,7 @@
 
         .features-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
@@ -155,15 +155,44 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             border-left: 4px solid #3498db;
+            transition: transform 0.3s ease;
         }
 
-        .feature-item h4 {
-            color: #2c3e50;
+        .feature-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .feature-item .icon {
+            font-size: 1.5em;
             margin-bottom: 10px;
-            font-size: 1.1em;
+            display: block;
         }
 
-        .feature-item p {
+        .feature-item .chinese-title {
+            color: #2c3e50;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .feature-item .pinyin {
+            color: #e74c3c;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .feature-item .english-title {
+            color: #3498db;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-item .description {
             color: #7f8c8d;
             font-size: 0.95em;
             line-height: 1.5;
@@ -198,6 +227,24 @@
             text-align: center;
             margin-top: 30px;
         }
+
+        .language-legend {
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .legend-item {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 0.9em;
+        }
+
+        .legend-chinese { color: #2c3e50; font-weight: 600; }
+        .legend-pinyin { color: #e74c3c; font-style: italic; }
+        .legend-english { color: #3498db; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -206,6 +253,7 @@
             <div class="nav-container">
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">HSK 3 基础</a>
+                    <a href="hsk3_master.html" class="nav-link">HSK 3 Master</a>
                     <a href="advanced.html" class="nav-link active">HSK 4-5 高级</a>
                 </div>
             </div>
@@ -227,30 +275,72 @@
 
         <div class="features-preview">
             <h3>即将推出的功能 / Upcoming Features</h3>
+            
+            <div class="language-legend">
+                <div class="legend-item">
+                    <span class="legend-chinese">■ 中文 Chinese</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-pinyin">■ pīnyīn</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-english">■ English</span>
+                </div>
+            </div>
+
             <div class="features-list">
                 <div class="feature-item">
-                    <h4>🎯 更长的文章</h4>
-                    <p>包含更复杂的语法结构和词汇的长篇阅读材料</p>
+                    <span class="icon">🎯</span>
+                    <div class="chinese-title">更长的文章</div>
+                    <div class="pinyin">gèng cháng de wénzhāng</div>
+                    <div class="english-title">Longer Articles</div>
+                    <p class="description">包含更复杂的语法结构和词汇的长篇阅读材料<br>
+                    <em>Reading materials with more complex grammar structures and vocabulary</em></p>
                 </div>
+
                 <div class="feature-item">
-                    <h4>📚 多种题型</h4>
-                    <p>选择题、填空题、判断题等多样化的测试形式</p>
+                    <span class="icon">📚</span>
+                    <div class="chinese-title">多种题型</div>
+                    <div class="pinyin">duōzhǒng tíxíng</div>
+                    <div class="english-title">Multiple Question Types</div>
+                    <p class="description">选择题、填空题、判断题等多样化的测试形式<br>
+                    <em>Diverse testing formats including multiple choice, fill-in-the-blank, and true/false questions</em></p>
                 </div>
+
                 <div class="feature-item">
-                    <h4>🧠 深度理解</h4>
-                    <p>测试推理能力、文章主旨理解和细节分析</p>
+                    <span class="icon">🧠</span>
+                    <div class="chinese-title">深度理解</div>
+                    <div class="pinyin">shēndù lǐjiě</div>
+                    <div class="english-title">Deep Comprehension</div>
+                    <p class="description">测试推理能力、文章主旨理解和细节分析<br>
+                    <em>Testing reasoning skills, main idea comprehension, and detailed analysis</em></p>
                 </div>
+
                 <div class="feature-item">
-                    <h4>🎨 文化背景</h4>
-                    <p>融入中国文化、历史和社会背景的阅读材料</p>
+                    <span class="icon">🎨</span>
+                    <div class="chinese-title">文化背景</div>
+                    <div class="pinyin">wénhuà bèijǐng</div>
+                    <div class="english-title">Cultural Context</div>
+                    <p class="description">融入中国文化、历史和社会背景的阅读材料<br>
+                    <em>Reading materials incorporating Chinese culture, history, and social background</em></p>
                 </div>
+
                 <div class="feature-item">
-                    <h4>⏱️ 时间挑战</h4>
-                    <p>模拟真实HSK考试的时间限制和节奏</p>
+                    <span class="icon">⏱️</span>
+                    <div class="chinese-title">时间挑战</div>
+                    <div class="pinyin">shíjiān tiǎozhàn</div>
+                    <div class="english-title">Timed Challenges</div>
+                    <p class="description">模拟真实HSK考试的时间限制和节奏<br>
+                    <em>Simulating real HSK exam time limits and pacing</em></p>
                 </div>
+
                 <div class="feature-item">
-                    <h4>📊 详细分析</h4>
-                    <p>个性化的成绩分析和学习建议</p>
+                    <span class="icon">📊</span>
+                    <div class="chinese-title">详细分析</div>
+                    <div class="pinyin">xiángxì fēnxī</div>
+                    <div class="english-title">Detailed Analysis</div>
+                    <p class="description">个性化的成绩分析和学习建议<br>
+                    <em>Personalized score analysis and study recommendations</em></p>
                 </div>
             </div>
         </div>
