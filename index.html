@@ -15,10 +15,62 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            padding: 20px;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .main-content {
+            margin-top: 100px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            min-height: calc(100vh - 120px);
         }
 
         .quiz-container {
@@ -248,37 +300,71 @@
             background: #ff6b6b;
             animation: confetti 2s linear infinite;
         }
+
+        @media (max-width: 768px) {
+            .navigation {
+                padding: 10px 0;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-link {
+                font-size: 1em;
+                padding: 8px 15px;
+            }
+            
+            .main-content {
+                margin-top: 80px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <div class="header">
-            <h1 class="title">汉语阅读测试</h1>
-            <p class="subtitle">HSK 3 Chinese Reading Quiz</p>
-        </div>
-
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <div id="quizContent">
-            <div class="question-container">
-                <div class="question-number" id="questionNumber">Question 1 of 15</div>
-                <div class="chinese-text" id="chineseText"></div>
-                <div class="question-text" id="questionText"></div>
-                <div class="options" id="options"></div>
-                <div class="feedback hidden" id="feedback"></div>
+    <nav class="navigation">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">HSK 3 基础</a>
+                <a href="advanced.html" class="nav-link">HSK 4-5 高级</a>
             </div>
         </div>
+    </nav>
 
-        <div class="buttons">
-            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()">Previous</button>
-            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
-            <button class="btn btn-primary hidden" id="submitBtn" onclick="submitAnswer()">Submit</button>
-            <button class="btn btn-secondary hidden" id="restartBtn" onclick="restartQuiz()">Restart Quiz</button>
+    <div class="main-content">
+        <div class="quiz-container">
+            <div class="header">
+                <h1 class="title">汉语阅读测试</h1>
+                <p class="subtitle">HSK 3 Chinese Reading Quiz</p>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div id="quizContent">
+                <div class="question-container">
+                    <div class="question-number" id="questionNumber">Question 1 of 15</div>
+                    <div class="chinese-text" id="chineseText"></div>
+                    <div class="question-text" id="questionText"></div>
+                    <div class="options" id="options"></div>
+                    <div class="feedback hidden" id="feedback"></div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+                <button class="btn btn-primary hidden" id="submitBtn" onclick="submitAnswer()">Submit</button>
+                <button class="btn btn-secondary hidden" id="restartBtn" onclick="restartQuiz()">Restart Quiz</button>
+            </div>
+
+            <div class="results hidden" id="results"></div>
         </div>
-
-        <div class="results hidden" id="results"></div>
     </div>
 
     <div class="celebration" id="celebration"></div>
