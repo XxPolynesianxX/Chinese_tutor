@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSK 3 Chinese Reading Quiz</title>
+    <title>HSK 3 Master Chinese Reading Quiz</title>
     <style>
         * {
             margin: 0;
@@ -78,7 +78,7 @@
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             position: relative;
             overflow: hidden;
@@ -120,11 +120,45 @@
         }
 
         .progress-bar {
-            background: linear-gradient(90deg, #3498db, #2ecc71);
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
             height: 100%;
             width: 0%;
             transition: width 0.3s ease;
             border-radius: 10px;
+        }
+
+        .passage-container {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border-left: 5px solid #e74c3c;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .passage-title {
+            color: #e74c3c;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .chinese-text {
+            font-size: 1.3em;
+            line-height: 2;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-align: justify;
+        }
+
+        .pinyin-hint {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            font-style: italic;
+            line-height: 1.6;
+            border-top: 1px solid #dee2e6;
+            padding-top: 15px;
         }
 
         .question-container {
@@ -132,20 +166,10 @@
         }
 
         .question-number {
-            color: #3498db;
+            color: #e74c3c;
             font-weight: bold;
             font-size: 1.2em;
             margin-bottom: 15px;
-        }
-
-        .chinese-text {
-            font-size: 1.4em;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
         }
 
         .question-text {
@@ -153,32 +177,38 @@
             margin-bottom: 15px;
             color: #2c3e50;
             font-weight: 500;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border-left: 4px solid #f39c12;
         }
 
         .options {
             display: grid;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
         .option {
-            padding: 12px 20px;
+            padding: 15px 20px;
             border: 2px solid #ecf0f1;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             background: white;
+            font-size: 1.05em;
         }
 
         .option:hover {
-            border-color: #3498db;
-            background: #ebf3fd;
+            border-color: #e74c3c;
+            background: #fdf2f2;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.2);
         }
 
         .option.selected {
-            border-color: #3498db;
-            background: #3498db;
+            border-color: #e74c3c;
+            background: #e74c3c;
             color: white;
         }
 
@@ -192,6 +222,7 @@
             border-color: #e74c3c;
             background: #e74c3c;
             color: white;
+            opacity: 0.7;
         }
 
         .buttons {
@@ -214,13 +245,13 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
         }
 
         .btn-secondary {
@@ -271,13 +302,6 @@
             display: none;
         }
 
-        .pinyin-hint {
-            font-size: 0.9em;
-            color: #7f8c8d;
-            font-style: italic;
-            margin-top: 5px;
-        }
-
         .celebration {
             position: fixed;
             top: 0;
@@ -322,6 +346,10 @@
             .title {
                 font-size: 2em;
             }
+            
+            .chinese-text {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
@@ -329,8 +357,8 @@
     <nav class="navigation">
         <div class="nav-container">
             <div class="nav-links">
-                <a href="index.html" class="nav-link active">HSK 3 基础</a>
-                <a href="hsk3_master.html" class="nav-link">HSK 3 Master</a>
+                <a href="index.html" class="nav-link">HSK 3 基础</a>
+                <a href="hsk3_master.html" class="nav-link active">HSK 3 Master</a>
                 <a href="advanced.html" class="nav-link">HSK 4-5 高级</a>
             </div>
         </div>
@@ -340,17 +368,38 @@
         <div class="quiz-container">
             <div class="header">
                 <h1 class="title">汉语阅读测试</h1>
-                <p class="subtitle">HSK 3 Chinese Reading Quiz</p>
+                <p class="subtitle">HSK 3 Master - Advanced Reading</p>
             </div>
 
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
 
+            <div class="passage-container">
+                <div class="passage-title">美食之旅 - A Culinary Journey</div>
+                <div class="chinese-text" id="passageText">
+                    王明是一个年轻的厨师，他在北京最有名的餐厅工作。虽然工作很辛苦，但是他非常热爱烹饪。每天早上六点，他就到市场去买最新鲜的食材。他认为，只有用最好的材料，才能做出最美味的菜肴。<br><br>
+
+                    王明的餐厅专门做传统的中国菜。菜单上有很多经典的菜，比如北京烤鸭、麻婆豆腐、糖醋里脊等。但是王明最拿手的菜是红烧肉。他的红烧肉不仅颜色漂亮，味道也特别好。许多客人都是专门来吃他做的红烧肉的。<br><br>
+
+                    除了在餐厅工作，王明还经常参加各种烹饪比赛。去年，他参加了全国青年厨师大赛，虽然没有得到第一名，但是获得了第三名，这让他很高兴。比赛的时候，他做了一道创新菜，把传统的宫保鸡丁和西方的意大利面结合在一起，味道很特别，评委们都很喜欢。<br><br>
+
+                    王明的梦想是有一天能开一家自己的餐厅。他希望这家餐厅不仅能提供美味的食物，还能让客人感受到中国饮食文化的魅力。他计划在餐厅里举办各种活动，比如教客人包饺子、学习茶艺等。他相信，通过食物，可以让更多的人了解和喜爱中国文化。<br><br>
+
+                    最近，王明开始学习营养学，因为他觉得现代人越来越注重健康饮食。他想研究怎样在保持传统味道的同时，让菜肴更加营养和健康。他已经开发了几道低油低盐的菜，在餐厅试卖，客人的反应很好。王明说："作为厨师，我们不只要让客人吃得开心，还要让他们吃得健康。"
+                </div>
+                <div class="pinyin-hint">
+                    Wáng Míng shì yí gè niánqīng de chúshī, tā zài Běijīng zuì yǒumíng de cāntīng gōngzuò. Suīrán gōngzuò hěn xīnkǔ, dànshì tā fēicháng rè'ài pēngrèn. Měitiān zǎoshang liù diǎn, tā jiù dào shìchǎng qù mǎi zuì xīnxiān de shícái. Tā rènwéi, zhǐyǒu yòng zuì hǎo de cáiliào, cái néng zuò chū zuì měiwèi de càiyáo.
+Wáng Míng de cāntīng zhuānmén zuò chuántǒng de Zhōngguó cài. Càidān shàng yǒu hěn duō jīngdiǎn de cài, bǐrú Běijīng kǎoyā, mápó dòufu, tángcù lǐjǐ děng. Dànshì Wáng Míng zuì náshǒu de cài shì hóngshāoròu. Tā de hóngshāoròu bùjǐn yánsè piàoliang, wèidao yě tèbié hǎo. Xǔduō kèrén dōu shì zhuānmén lái chī tā zuò de hóngshāoròu de.
+Chúle zài cāntīng gōngzuò, Wáng Míng hái jīngcháng cānjiā gèzhǒng pēngrèn bǐsài. Qùnián, tā cānjiāle quánguó qīngnián chúshī dàsài, suīrán méiyǒu dédào dì yī míng, dànshì huòdéle dì sān míng, zhè ràng tā hěn gāoxìng. Bǐsài de shíhou, tā zuòle yí dào chuàngxīn cài, bǎ chuántǒng de gōngbào jīdīng hé xīfāng de yìdàlìmiàn jiéhé zài yìqǐ, wèidao hěn tèbié, píngwěi men dōu hěn xǐhuan.
+Wáng Míng de mèngxiǎng shì yǒu yì tiān néng kāi yì jiā zìjǐ de cāntīng. Tā xīwàng zhè jiā cāntīng bùjǐn néng tígōng měiwèi de shíwù, hái néng ràng kèrén gǎnshòu dào Zhōngguó yǐnshí wénhuà de mèilì. Tā jìhuà zài cāntīng lǐ jǔbàn gèzhǒng huódòng, bǐrú jiāo kèrén bāo jiǎozi, xuéxí cháyì děng. Tā xiāngxìn, tōngguò shíwù, kěyǐ ràng gèng duō de rén liǎojiě hé xǐ'ài Zhōngguó wénhuà.
+Zuìjìn, Wáng Míng kāishǐ xuéxí yíngyǎngxué, yīnwèi tā juéde xiàndài rén yuè lái yuè zhùzhòng jiànkāng yǐnshí. Tā xiǎng yánjiū zěnyàng zài bǎochí chuántǒng wèidao de tóngshí, ràng càiyáo gèng jiā yíngyǎng hé jiànkāng. Tā yǐjīng kāifāle jǐ dào dī yóu dī yán de cài, zài cāntīng shìmài, kèrén de fǎnyìng hěn hǎo. Wáng Míng shuō: "Zuòwéi chúshī, wǒmen bù zhǐ yào ràng kèrén chī de kāixīn, hái yào ràng tāmen chī de jiànkāng.
+                </div>
+            </div>
+
             <div id="quizContent">
                 <div class="question-container">
-                    <div class="question-number" id="questionNumber">Question 1 of 15</div>
-                    <div class="chinese-text" id="chineseText"></div>
+                    <div class="question-number" id="questionNumber">Question 1 of 12</div>
                     <div class="question-text" id="questionText"></div>
                     <div class="options" id="options"></div>
                     <div class="feedback hidden" id="feedback"></div>
@@ -373,124 +422,136 @@
     <script>
         const questions = [
             {
-                text: "小明每天早上七点起床，然后刷牙洗脸。他八点吃早饭，九点去上学。",
-                pinyin: "Xiǎo Míng měi tiān zǎoshang qī diǎn qǐchuáng, ránhòu shuāyá xǐliǎn. Tā bā diǎn chī zǎofàn, jiǔ diǎn qù shàngxué.",
-                question: "小明什么时候吃早饭？",
-                options: ["七点", "八点", "九点", "十点"],
+                question: "根据文章，王明为什么每天早上六点就去市场？",
+                options: [
+                    "因为六点市场开门",
+                    "因为他要买最新鲜的食材",
+                    "因为六点人比较少",
+                    "因为六点的菜比较便宜"
+                ],
                 correct: 1,
-                explanation: "文中说'他八点吃早饭' - He eats breakfast at 8 o'clock"
+                explanation: "文中说'每天早上六点，他就到市场去买最新鲜的食材'，说明他早起是为了买最新鲜的食材。"
             },
             {
-                text: "这家餐厅的菜很好吃，服务也很好。价格不贵，所以很多人都喜欢来这里吃饭。",
-                pinyin: "Zhè jiā cāntīng de cài hěn hǎochī, fúwù yě hěn hǎo. Jiàgé bù guì, suǒyǐ hěn duō rén dōu xǐhuan lái zhèlǐ chīfàn.",
-                question: "为什么很多人喜欢来这家餐厅？",
-                options: ["只因为菜好吃", "因为服务好", "因为价格便宜", "菜好吃、服务好、价格不贵"],
-                correct: 3,
-                explanation: "文中提到了三个原因：菜好吃、服务好、价格不贵"
-            },
-            {
-                text: "今天天气很冷，外面下雪了。我不想出门，就在家里看电视。",
-                pinyin: "Jīntiān tiānqì hěn lěng, wàimiàn xiàxuě le. Wǒ bù xiǎng chūmén, jiù zài jiālǐ kàn diànshì.",
-                question: "今天的天气怎么样？",
-                options: ["很热", "下雨", "很冷，下雪", "很好"],
+                question: "王明认为做出美味菜肴的关键是什么？",
+                options: [
+                    "烹饪技术要好",
+                    "要有丰富的经验",
+                    "要用最好的材料",
+                    "要有创新的想法"
+                ],
                 correct: 2,
-                explanation: "'今天天气很冷，外面下雪了' - Today is very cold and it's snowing outside"
+                explanation: "文中王明说'只有用最好的材料，才能做出最美味的菜肴'，表明他认为好材料是关键。"
             },
             {
-                text: "我的朋友李华学习很努力。他每天晚上都学习到十二点。虽然很累，但是他的成绩很好。",
-                pinyin: "Wǒ de péngyou Lǐ Huá xuéxí hěn nǔlì. Tā měi tiān wǎnshang dōu xuéxí dào shí'èr diǎn. Suīrán hěn lèi, dànshì tā de chéngjì hěn hǎo.",
-                question: "李华每天学习到几点？",
-                options: ["十点", "十一点", "十二点", "一点"],
-                correct: 2,
-                explanation: "'他每天晚上都学习到十二点' - He studies until 12 o'clock every night"
-            },
-            {
-                text: "我们学校的图书馆很大，有很多书。学生们可以在那里看书，也可以借书回家看。",
-                pinyin: "Wǒmen xuéxiào de túshūguǎn hěn dà, yǒu hěn duō shū. Xuéshengmen kěyǐ zài nàlǐ kàn shū, yě kěyǐ jiè shū huí jiā kàn.",
-                question: "学生们在图书馆可以做什么？",
-                options: ["只能看书", "只能借书", "可以看书和借书", "不能做什么"],
-                correct: 2,
-                explanation: "'学生们可以在那里看书，也可以借书回家看' - Students can read books there and also borrow books to read at home"
-            },
-            {
-                text: "我妈妈做的饭很好吃。她会做很多菜，比如红烧肉、糖醋鱼、麻婆豆腐等。",
-                pinyin: "Wǒ māma zuò de fàn hěn hǎochī. Tā huì zuò hěn duō cài, bǐrú hóngshāoròu, tángcùyú, mápó dòufu děng.",
-                question: "文中提到了哪些菜？",
-                options: ["红烧肉、糖醋鱼", "麻婆豆腐", "红烧肉、糖醋鱼、麻婆豆腐", "只有红烧肉"],
-                correct: 2,
-                explanation: "文中用'比如'举例说明了三道菜：红烧肉、糖醋鱼、麻婆豆腐"
-            },
-            {
-                text: "明天是周末，我打算和朋友一起去公园玩。我们准备带一些水果和饮料。",
-                pinyin: "Míngtiān shì zhōumò, wǒ dǎsuàn hé péngyou yīqǐ qù gōngyuán wán. Wǒmen zhǔnbèi dài yīxiē shuǐguǒ hé yǐnliào.",
-                question: "他们准备带什么去公园？",
-                options: ["只带水果", "只带饮料", "带水果和饮料", "什么都不带"],
-                correct: 2,
-                explanation: "'我们准备带一些水果和饮料' - We plan to bring some fruit and drinks"
-            },
-            {
-                text: "这个商店的东西很便宜。一个苹果只要两块钱，一瓶水只要一块钱。",
-                pinyin: "Zhège shāngdiàn de dōngxi hěn piányi. Yīgè píngguǒ zhǐyào liǎng kuài qián, yī píng shuǐ zhǐyào yī kuài qián.",
-                question: "一个苹果多少钱？",
-                options: ["一块钱", "两块钱", "三块钱", "四块钱"],
+                question: "关于王明餐厅的菜单，以下哪个说法是正确的？",
+                options: [
+                    "主要做西方菜",
+                    "专门做传统中国菜",
+                    "只有创新菜",
+                    "中西菜都有"
+                ],
                 correct: 1,
-                explanation: "'一个苹果只要两块钱' - An apple costs only 2 yuan"
+                explanation: "文中明确说'王明的餐厅专门做传统的中国菜'。"
             },
             {
-                text: "我的房间不大，但是很舒服。房间里有一张床、一张桌子和一个书架。",
-                pinyin: "Wǒ de fángjiān bù dà, dànshì hěn shūfu. Fángjiān lǐ yǒu yī zhāng chuáng, yī zhāng zhuōzi hé yīgè shūjià.",
-                question: "房间里有什么家具？",
-                options: ["床和桌子", "桌子和书架", "床、桌子和书架", "只有床"],
+                question: "很多客人专门来餐厅是为了吃什么菜？",
+                options: [
+                    "北京烤鸭",
+                    "麻婆豆腐",
+                    "红烧肉",
+                    "糖醋里脊"
+                ],
                 correct: 2,
-                explanation: "文中提到房间里有：一张床、一张桌子和一个书架"
+                explanation: "文中说'许多客人都是专门来吃他做的红烧肉的'，说明红烧肉是王明的拿手菜。"
             },
             {
-                text: "我昨天去医院看病。医生说我感冒了，需要多喝水，多休息。",
-                pinyin: "Wǒ zuótiān qù yīyuàn kàn bìng. Yīshēng shuō wǒ gǎnmào le, xūyào duō hē shuǐ, duō xiūxi.",
-                question: "医生建议他做什么？",
-                options: ["多运动", "多吃药", "多喝水，多休息", "去别的医院"],
+                question: "在全国青年厨师大赛中，王明获得了什么名次？",
+                options: [
+                    "第一名",
+                    "第二名", 
+                    "第三名",
+                    "没有获奖"
+                ],
                 correct: 2,
-                explanation: "医生说'需要多喝水，多休息' - The doctor said he needs to drink more water and rest more"
+                explanation: "文中说'虽然没有得到第一名，但是获得了第三名'。"
             },
             {
-                text: "我们班有三十个学生，十五个男生，十五个女生。大家都很友好。",
-                pinyin: "Wǒmen bān yǒu sānshí gè xuésheng, shíwǔ gè nánshēng, shíwǔ gè nǚshēng. Dàjiā dōu hěn yǒuhǎo.",
-                question: "这个班有多少个学生？",
-                options: ["十五个", "二十个", "三十个", "四十个"],
+                question: "在比赛中，王明的创新菜是什么？",
+                options: [
+                    "传统宫保鸡丁",
+                    "意大利面配中式调料",
+                    "宫保鸡丁和意大利面的结合",
+                    "中式红烧肉配西式蔬菜"
+                ],
                 correct: 2,
-                explanation: "'我们班有三十个学生' - Our class has 30 students"
+                explanation: "文中说他'把传统的宫保鸡丁和西方的意大利面结合在一起'。"
             },
             {
-                text: "我爸爸是医生，我妈妈是老师。他们工作都很忙，但是对我很好。",
-                pinyin: "Wǒ bàba shì yīshēng, wǒ māma shì lǎoshī. Tāmen gōngzuò dōu hěn máng, dànshì duì wǒ hěn hǎo.",
-                question: "他妈妈的工作是什么？",
-                options: ["医生", "老师", "护士", "学生"],
+                question: "王明的梦想是什么？",
+                options: [
+                    "成为著名的厨师",
+                    "开一家自己的餐厅",
+                    "参加更多的比赛",
+                    "学习更多的烹饪技术"
+                ],
                 correct: 1,
-                explanation: "'我妈妈是老师' - My mother is a teacher"
+                explanation: "文中说'王明的梦想是有一天能开一家自己的餐厅'。"
             },
             {
-                text: "这家超市很大，什么东西都有。水果、蔬菜、肉类、饮料都很新鲜。",
-                pinyin: "Zhè jiā chāoshì hěn dà, shénme dōngxi dōu yǒu. Shuǐguǒ, shūcài, ròulèi, yǐnliào dōu hěn xīnxiān.",
-                question: "这家超市怎么样？",
-                options: ["很小", "东西不全", "很大，什么都有", "东西不新鲜"],
+                question: "王明希望在他的餐厅里举办什么样的活动？",
+                options: [
+                    "烹饪比赛",
+                    "音乐表演",
+                    "包饺子和茶艺学习",
+                    "食物展览"
+                ],
                 correct: 2,
-                explanation: "'这家超市很大，什么东西都有' - This supermarket is very big and has everything"
+                explanation: "文中提到'比如教客人包饺子、学习茶艺等'。"
             },
             {
-                text: "今天是我的生日。朋友们给我买了一个大蛋糕和很多礼物。我很高兴。",
-                pinyin: "Jīntiān shì wǒ de shēngrì. Péngyoumen gěi wǒ mǎi le yīgè dà dàngāo hé hěn duō lǐwù. Wǒ hěn gāoxìng.",
-                question: "朋友们给他买了什么？",
-                options: ["只有蛋糕", "只有礼物", "蛋糕和礼物", "什么都没买"],
-                correct: 2,
-                explanation: "'朋友们给我买了一个大蛋糕和很多礼物' - Friends bought me a big cake and many gifts"
-            },
-            {
-                text: "我每天坐公交车上学。从家到学校需要三十分钟。我觉得坐公交车很方便。",
-                pinyin: "Wǒ měi tiān zuò gōngjiāochē shàngxué. Cóng jiā dào xuéxiào xūyào sānshí fēnzhōng. Wǒ juéde zuò gōngjiāochē hěn fāngbiàn.",
-                question: "从家到学校需要多长时间？",
-                options: ["二十分钟", "三十分钟", "四十分钟", "一小时"],
+                question: "王明认为通过食物可以达到什么目的？",
+                options: [
+                    "赚更多的钱",
+                    "让人了解中国文化",
+                    "提高餐厅的知名度",
+                    "吸引更多客人"
+                ],
                 correct: 1,
-                explanation: "'从家到学校需要三十分钟' - It takes 30 minutes from home to school"
+                explanation: "文中说'通过食物，可以让更多的人了解和喜爱中国文化'。"
+            },
+            {
+                question: "王明最近开始学习营养学的原因是什么？",
+                options: [
+                    "想要改变职业",
+                    "老板要求他学习",
+                    "现代人注重健康饮食",
+                    "想要参加营养师考试"
+                ],
+                correct: 2,
+                explanation: "文中说'因为他觉得现代人越来越注重健康饮食'。"
+            },
+            {
+                question: "王明开发的新菜有什么特点？",
+                options: [
+                    "更加辣味",
+                    "更加甜味",
+                    "低油低盐",
+                    "更加复杂"
+                ],
+                correct: 2,
+                explanation: "文中说'他已经开发了几道低油低盐的菜'。"
+            },
+            {
+                question: "根据文章最后一段，王明对厨师职业的理解是什么？",
+                options: [
+                    "只要让客人吃得开心就够了",
+                    "要让客人既吃得开心又吃得健康",
+                    "要专注于传统菜肴",
+                    "要不断创新菜品"
+                ],
+                correct: 1,
+                explanation: "王明说'我们不只要让客人吃得开心，还要让他们吃得健康'，体现了他对厨师职业的全面理解。"
             }
         ];
 
@@ -512,7 +573,6 @@
             const question = questions[currentQuestion];
             
             document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
-            document.getElementById('chineseText').innerHTML = `${question.text}<div class="pinyin-hint">${question.pinyin}</div>`;
             document.getElementById('questionText').textContent = question.question;
             
             const optionsContainer = document.getElementById('options');
@@ -616,15 +676,15 @@
             
             const percentage = Math.round((correctAnswers / questions.length) * 100);
             let scoreClass = 'needs-improvement';
-            let message = '需要更多练习！Keep practicing!';
+            let message = '继续努力！Keep working hard!';
             
-            if (percentage >= 80) {
+            if (percentage >= 85) {
                 scoreClass = 'excellent';
-                message = '太棒了！Excellent work!';
+                message = '掌握得很好！Excellent mastery!';
                 createCelebration();
-            } else if (percentage >= 60) {
+            } else if (percentage >= 70) {
                 scoreClass = 'good';
-                message = '做得不错！Good job!';
+                message = '理解得不错！Good understanding!';
             }
             
             resultsDiv.innerHTML = `
@@ -632,6 +692,7 @@
                 <h2>${message}</h2>
                 <p>你答对了 ${correctAnswers} 道题，共 ${questions.length} 题</p>
                 <p>You got ${correctAnswers} out of ${questions.length} questions correct</p>
+                <p style="margin-top: 15px; font-style: italic;">HSK 3 Master level requires deeper reading comprehension!</p>
             `;
             
             document.getElementById('restartBtn').classList.remove('hidden');
@@ -656,7 +717,7 @@
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + '%';
                 confetti.style.animationDelay = Math.random() * 2 + 's';
-                confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7'][Math.floor(Math.random() * 5)];
+                confetti.style.backgroundColor = ['#e74c3c', '#f39c12', '#f1c40f', '#2ecc71', '#3498db'][Math.floor(Math.random() * 5)];
                 celebration.appendChild(confetti);
             }
             
